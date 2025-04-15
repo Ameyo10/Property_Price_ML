@@ -1,7 +1,5 @@
 import pandas as pd
 import joblib
-# from sklearn.preprocessing import StandardScaler
-# from sklearn.impute import SimpleImputer
 
 def predict_new_data(new_data_path):
     # Load model and feature information
@@ -29,7 +27,7 @@ def predict_new_data(new_data_path):
 
 # Making Predictions
 if __name__ == "__main__":
-    
+
     # Reading the test data
     test_data = pd.read_csv('D:/Python Projects/Python-Projects/Machine_Learning_Projects_Discord/Property_Price/test.csv')
     
