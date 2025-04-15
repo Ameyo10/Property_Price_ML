@@ -4,7 +4,7 @@ import pandas as pd
 
 # Inserting the data from the files and cleaning it
 
-train_data = pd.read_csv(r'train.csv')
+train_data = pd.read_csv('D:/Python Projects/Python-Projects/Machine_Learning_Projects_Discord/Property_Price/train.csv')
 # train_df = pd.DataFrame(train_data)
 
 # Replacing the na values
@@ -77,6 +77,8 @@ for feature, corr in sale_price_corr.items():
         imp_features[feature] = corr
 
 print(imp_features)
+
+train_data.to_csv('D:/Python Projects/Python-Projects/Machine_Learning_Projects_Discord/Property_Price/train.csv')
 
 # print(train_data[catergle_col].dtypes)
 
