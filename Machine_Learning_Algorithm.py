@@ -9,6 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import GridSearchCV
+import joblib
 
 train_data = pd.read_csv(r'D:\Python Projects\Python-Projects\Machine_Learning_Projects_Discord\Property_Price\train.csv')
 train_df = pd.DataFrame(train_data)
@@ -60,7 +61,14 @@ grid = GridSearchCV(
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 grid.fit(X_train, y_train)
 
+#Predicting the datas
 pred = grid.predict(X_test)
 r2 = r2_score(y_test, pred)
 print(f'R-squared: {r2:.4f}')
 print("Best parameters:", grid.best_params_)
+
+# Saving the best model
+joblib.dump(grid.best_estimator_, 'property_price_model.pkl')
+
+# Saving the important features (needed for new data processing)
+joblib.dump(important_features, 'important_features.pkl')

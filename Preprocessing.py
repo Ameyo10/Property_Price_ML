@@ -1,11 +1,9 @@
 import pandas as pd
-# import matplotlib.pyplot as plt
-# import seaborn as sns
 
 # Inserting the data from the files and cleaning it
 
 train_data = pd.read_csv('D:/Python Projects/Python-Projects/Machine_Learning_Projects_Discord/Property_Price/train.csv')
-# train_df = pd.DataFrame(train_data)
+test_data = pd.read_csv('D:/Python Projects/Python-Projects/Machine_Learning_Projects_Discord/Property_Price/test.csv')
 
 # Replacing the na values
 col_na = ['Alley', 'BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'BsmtFinType2', 'FireplaceQu',
@@ -14,11 +12,6 @@ col_na = ['Alley', 'BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 'Bsmt
 col0 = ['LotFrontage', 'MasVnrArea', 'GarageYrBlt']
 col_none = ['MasVnrType']
 col_SBrkr = ['Electrical']
-
-# for col in col_na:
-#     train_df[col] = train_df[col].fillna('NA')
-# for col in col0:
-#     train_df[col] = train_df[col].fillna(0)
 
 numeric_col=train_data.select_dtypes(include=['number']).columns[0:]
 catergle_col=train_data.select_dtypes(include=['object']).columns[0:]
@@ -34,29 +27,6 @@ train_data[col_SBrkr] = train_data[col_SBrkr].fillna('SBrkr')
 col_num = ['MSSubClass']
 for col in col_num:
     train_data[col] = train_data[col].astype(str)
-
-# # Define columns
-# col_en = [
-#     'MSSubClass', 'MSZoning', 'Street', 'Alley', 'LotShape', 'LandContour', 
-#     'Utilities', 'LotConfig', 'LandSlope', 'Neighborhood', 'Condition1', 
-#     'Condition2', 'BldgType', 'HouseStyle', 'RoofStyle', 'RoofMatl', 
-#     'Exterior1st', 'Exterior2nd', 'MasVnrType', 'ExterQual', 'ExterCond', 
-#     'Foundation', 'BsmtQual', 'BsmtCond', 'BsmtExposure', 'BsmtFinType1', 
-#     'BsmtFinType2', 'Heating', 'HeatingQC', 'CentralAir', 'Electrical', 
-#     'KitchenQual', 'Functional', 'FireplaceQu', 'GarageType', 'GarageFinish', 
-#     'GarageQual', 'GarageCond', 'PavedDrive', 'PoolQC', 'Fence', 'MiscFeature', 
-#     'SaleType', 'SaleCondition' , # SalePrice removed
-# ]
-
-# numerical_cols = [
-#     'Id', 'LotFrontage', 'LotArea', 'YearBuilt', 'YearRemodAdd', 'MasVnrArea', 
-#     'BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF', 'TotalBsmtSF', '1stFlrSF', 
-#     '2ndFlrSF', 'LowQualFinSF', 'GrLivArea', 'BsmtFullBath', 'BsmtHalfBath', 
-#     'FullBath', 'HalfBath', 'BedroomAbvGr', 'KitchenAbvGr', 'TotRmsAbvGrd', 
-#     'Fireplaces', 'GarageYrBlt', 'GarageCars', 'GarageArea', 'WoodDeckSF', 
-#     'OpenPorchSF', 'EnclosedPorch', '3SsnPorch', 'ScreenPorch', 'PoolArea', 
-#     'MiscVal', 'MoSold', 'YrSold', 'SalePrice', 'OverallQual', 'OverallCond'  # SalePrice stays here
-# ]
 
 # Encode categorical columns and join with numericals
 train_encoded = pd.get_dummies(
@@ -80,14 +50,20 @@ print(imp_features)
 
 train_data.to_csv('D:/Python Projects/Python-Projects/Machine_Learning_Projects_Discord/Property_Price/train.csv')
 
-# print(train_data[catergle_col].dtypes)
+# Making the similar preprocessing steps to the test dataset
+numeric_col1=test_data.select_dtypes(include=['number']).columns[0:]
+catergle_col1=test_data.select_dtypes(include=['object']).columns[0:]
+numeric_mean=test_data[numeric_col1].mean()
+
+test_data[numeric_col1]=test_data[numeric_col1].fillna(numeric_mean)
+test_data[catergle_col1]=test_data[catergle_col1].fillna('NA')
 
 
+test_data[col_none] = test_data[col_none].fillna('None')
+test_data[col_SBrkr] = test_data[col_SBrkr].fillna('SBrkr')
 
+col_num = ['MSSubClass']
+for col in col_num:
+    test_data[col] = test_data[col].astype(str)
 
-
-
-
-
-# print(train_data.head(10))
-# y= train_df['SalePrice']
+test_data.to_csv('D:/Python Projects/Python-Projects/Machine_Learning_Projects_Discord/Property_Price/test.csv')
